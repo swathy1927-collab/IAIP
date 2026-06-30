@@ -1,0 +1,7 @@
+import pandas as pd
+url = "https://raw.githubusercontent.com/laxmimerit/fake-real-news-dataset/master/data/Fake.csv"
+df = pd.read_csv(url)
+df.to_csv("fake_real.csv", index=False)
+print("Dataset downloaded successfully!")
+print("Saved as: fake_real.csv")
+print(df.head())
