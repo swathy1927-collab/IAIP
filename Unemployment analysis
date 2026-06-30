@@ -1,0 +1,58 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("df_unemployment_rates.csv")
+sex = pd.read_csv("df_sex_unemployment_rates.csv")
+print(df.head())
+print(sex.head())
+print(df.isnull().sum())
+print(sex.isnull().sum())
+df = df.dropna()
+sex = sex.dropna()
+print(df.info())
+print(sex.info())
+print(df.describe())
+plt.figure(figsize=(10,5))
+plt.plot(df["overall_rate"])
+plt.title("Overall Unemployment Rate")
+plt.xlabel("Records")
+plt.ylabel("Rate (%)")
+plt.grid(True)
+plt.show()
+age_rates = {
+    "16-17": df["age_16_17_rate"].mean(),
+    "16-19": df["age_16_19_rate"].mean(),
+    "18-19": df["age_18_19_rate"].mean(),
+    "16-24": df["age_16_24_rate"].mean(),
+    "20-24": df["age_20_24_rate"].mean(),
+    "25-34": df["age_25_34_rate"].mean(),
+    "35-44": df["age_35_44_rate"].mean(),
+    "45-54": df["age_45_54_rate"].mean(),
+    "55+": df["age_55plus_rate"].mean()
+}
+plt.figure(figsize=(10,5))
+plt.bar(age_rates.keys(), age_rates.values())
+plt.title("Average Unemployment Rate by Age Group")
+plt.xlabel("Age Group")
+plt.ylabel("Average Rate (%)")
+plt.show()
+gender_rates = {
+    "Men": sex["men_rate"].mean(),
+    "Women": sex["women_rate"].mean()
+}
+plt.figure(figsize=(5,5))
+plt.bar(gender_rates.keys(), gender_rates.values())
+plt.title("Average Unemployment Rate by Gender")
+plt.ylabel("Average Rate (%)")
+plt.show()
+print("Average Overall Rate :", df["overall_rate"].mean())
+print("Average Men Rate :", sex["men_rate"].mean())
+print("Average Women Rate :", sex["women_rate"].mean())
+
+print("\nAverage Unemployment by Age Group")
+for age, value in age_rates.items():
+    print(age, ":", round(value,2))
+print("\nConclusion")
+print("1. Young people (16-24 years) have the highest unemployment rate.")
+print("2. Older age groups have lower unemployment rates.")
+print("3. Male and female unemployment rates are similar with slight differences.")
+print("4. The analysis helps understand unemployment trends for policy planning.")
